@@ -61,7 +61,7 @@ def evaluate(args):
         raise ValueError("Invalid policy")
 
     if args.policy.lower()=="dummy" or args.policy.lower()=="random":
-        args.save_dir = os.path.join("output",args.policy.lower())
+        args.save_dir = os.path.join("outputs",args.policy.lower())
     else:
         args.save_dir = os.path.join(os.path.dirname(policy._server_metadata['pretrained_path']), args.save_dir)
     episode_config = None
