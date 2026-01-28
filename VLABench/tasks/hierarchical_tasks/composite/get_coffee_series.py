@@ -31,12 +31,12 @@ class GetCoffeeConfigManager(BenchTaskConfigManager):
     def load_objects(self, target_entity, *kwargs):
         super().load_objects(target_entity, *kwargs)
         self.config["task"]["components"][-1]["randomness"] = None
-        # self.config["task"]["components"][-1]["position"] = [random.uniform(0.2, 0.3),
-        #                                                      random.uniform(0, 0.2),
-        #                                                      0.85]
-        self.config["task"]["components"][-1]["position"] = [0.25,
-                                                             0.05,
+        self.config["task"]["components"][-1]["position"] = [random.uniform(0.2, 0.3),
+                                                             random.uniform(0, 0.2),
                                                              0.85]
+        # self.config["task"]["components"][-1]["position"] = [0.25,
+        #                                                      0.05,
+        #                                                      0.85]
         self.config["task"]["components"][-1]["orientation"] = [0, 0, -np.pi/2]
         box_config = dict(
             name="bottom",
@@ -50,12 +50,12 @@ class GetCoffeeConfigManager(BenchTaskConfigManager):
         
     def load_containers(self, target_container):
         super().load_containers(target_container)
-        # self.config["task"]["components"][-1]["position"] = [random.uniform(-0.3, -0.2), 
-        #                                                      random.uniform(0.25, 0.35), 
-        #                                                      0.78]
-        self.config["task"]["components"][-1]["position"] = [-0.25, 
-                                                             0.3, 
+        self.config["task"]["components"][-1]["position"] = [random.uniform(-0.3, -0.2), 
+                                                             random.uniform(0.25, 0.35), 
                                                              0.78]
+        # self.config["task"]["components"][-1]["position"] = [-0.25, 
+        #                                                      0.3, 
+        #                                                      0.78]
         
     
 @register.add_config_manager("get_coffee_with_sugar")
