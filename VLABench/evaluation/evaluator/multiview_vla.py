@@ -32,6 +32,7 @@ class MultiViewVLAEvaluator(Evaluator):
         eval_unseen=False,
         unnorm_key="primitive",
         observation_images=None,
+        xml_file="base/default.xml", # 控制使用哪套相机参数
         **kwargs,
     ):
         """
@@ -52,6 +53,7 @@ class MultiViewVLAEvaluator(Evaluator):
         )
         
         self.observation_images = observation_images
+        self.xml_file = xml_file 
     
     def evaluate_single_episode(self, agent, task_name, episode_id, episode_config, seed=42, max_episode_length=300, **kwargs):
         """
@@ -68,9 +70,9 @@ class MultiViewVLAEvaluator(Evaluator):
             np.random.seed(seed)
             random.seed(seed)
         if episode_config is not None:
-            env = load_env(task_name, episode_config=episode_config, random_init=False, eval=self.eval_unseen, run_mode="eval")
+            env = load_env(task_name, episode_config=episode_config, random_init=False, eval=self.eval_unseen, run_mode="eval", xml_file = self.xml_file) # xml_file控制使用哪套相机参数
         else:
-            env = load_env(task_name, random_init=True, eval=self.eval_unseen, run_mode="eval")
+            env = load_env(task_name, random_init=True, eval=self.eval_unseen, run_mode="eval", xml_file = self.xml_file) # xml_file控制使用哪套相机参数
         env.reset()
         success = False
         info = {}
