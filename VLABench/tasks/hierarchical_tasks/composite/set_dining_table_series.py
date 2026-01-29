@@ -101,8 +101,8 @@ class DiningSetTask(CompositeTask):
     def __init__(self, task_name, robot, **kwargs):
         super().__init__(task_name, robot=robot, **kwargs)
 
-    def reset_camera_views(self, index=1):
-        return super().reset_camera_views(index)
+    # def reset_camera_views(self, index=1):
+    #     return super().reset_camera_views(index)
     
     def build_from_config(self, eval=False, **kwargs):
         super().build_from_config(eval, **kwargs)

@@ -188,8 +188,8 @@ class SelectPaintingTask(PressButtonTask):
                 entity.detach()
                 self._arena.attach(entity)
     
-    def reset_camera_views(self, index=1): # default index=1
-        return super().reset_camera_views(index)
+    # def reset_camera_views(self, index=1): # default index=1
+    #     return super().reset_camera_views(index)
     
 @register.add_task("put_box_on_painting")
 class PutBoxOnPaintingTask(SelectPaintingTask):

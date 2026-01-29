@@ -83,10 +83,10 @@ def generate_trajectory(args, index, logger):
     if args.record_video:
         frames = [] 
         for o in observations:
-            frames.append(np.vstack([np.hstack(o["rgb"][:2]), np.hstack(o["rgb"][2:4])]))
+            frames.append(np.vstack([np.hstack(o["rgb"][:2]), np.hstack(o["rgb"][2:4]), np.hstack(o["rgb"][4:])]))
         if not os.path.exists(task_dir):
             os.makedirs(task_dir)
-        mediapy.write_video(os.path.join(task_dir, f"demo_{index}_success_{task_success}.mp4"), 
+        mediapy.write_video(os.path.join(task_dir, f"demo_{index:07}_success_{task_success}.mp4"), 
                             frames, fps=10) 
     if not task_success:
         logger.warning("Task failed, skip saving data")
@@ -106,7 +106,7 @@ def generate_trajectory(args, index, logger):
     data_to_save["instruction"] =meta_info["instruction"]
     save_single_data(data_to_save, 
                      save_dir=task_dir,
-                     filename=f"data_{index}.hdf5",
+                     filename=f"data_{index:07}.hdf5",
                      )
     env.close()
     

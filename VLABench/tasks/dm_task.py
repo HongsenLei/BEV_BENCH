@@ -74,14 +74,14 @@ class LM4ManipBaseTask(composer.Task):
             self.workspace = [-0.3, 0.3, -0.2, 0.3, 0.75, 1.5]
         
         self.build_from_config(eval, deterministic_config=episode_config)
-        self.reset_camera_views()
+    #     self.reset_camera_views()
     
-    def reset_camera_views(self, index=2):
-        if self.task_name in CAMERA_VIEWS:
-            cameras = self._arena.mjcf_model.find_all("camera")
-            target_camera = cameras[index]
-            for attr, value in CAMERA_VIEWS[self.task_name].items():
-                setattr(target_camera, attr, value)
+    # def reset_camera_views(self, index=2):
+    #     if self.task_name in CAMERA_VIEWS:
+    #         cameras = self._arena.mjcf_model.find_all("camera")
+    #         target_camera = cameras[index]
+    #         for attr, value in CAMERA_VIEWS[self.task_name].items():
+    #             setattr(target_camera, attr, value)
             
     def step(self, action):
         pass

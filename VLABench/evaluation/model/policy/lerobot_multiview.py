@@ -10,11 +10,20 @@ import numpy as np
 from VLABench.utils.utils import euler_to_quaternion, quaternion_to_euler
 
 
+# OBSERVATION = {
+#     "observation.image_0": 2,
+#     "observation.image_1": 3,
+#     "observation.image_2": 0,
+#     "observation.image_3": 1,
+#     "observation.image_4": 4,
+#     "observation.image_wrist": 5,
+# }  # 转换为lerobot的数据
+
 OBSERVATION = {
-    "observation.image_0": 2,
-    "observation.image_1": 3,
-    "observation.image_2": 0,
-    "observation.image_3": 1,
+    "observation.image_0": 0,
+    "observation.image_1": 1,
+    "observation.image_2": 2,
+    "observation.image_3": 3,
     "observation.image_4": 4,
     "observation.image_wrist": 5,
 }  # 转换为lerobot的数据
