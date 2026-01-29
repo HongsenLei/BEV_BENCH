@@ -34,9 +34,6 @@ class GetCoffeeConfigManager(BenchTaskConfigManager):
         self.config["task"]["components"][-1]["position"] = [random.uniform(0.2, 0.3),
                                                              random.uniform(0, 0.2),
                                                              0.85]
-        # self.config["task"]["components"][-1]["position"] = [0.25,
-        #                                                      0.05,
-        #                                                      0.85]
         self.config["task"]["components"][-1]["orientation"] = [0, 0, -np.pi/2]
         box_config = dict(
             name="bottom",
@@ -53,11 +50,6 @@ class GetCoffeeConfigManager(BenchTaskConfigManager):
         self.config["task"]["components"][-1]["position"] = [random.uniform(-0.3, -0.2), 
                                                              random.uniform(0.25, 0.35), 
                                                              0.78]
-        # self.config["task"]["components"][-1]["position"] = [-0.25, 
-        #                                                      0.3, 
-        #                                                      0.78]
-        
-    
 @register.add_config_manager("get_coffee_with_sugar")
 class GetCoffeeWithSugarConfigManager(GetCoffeeConfigManager):
     def load_objects(self, target_entity):
