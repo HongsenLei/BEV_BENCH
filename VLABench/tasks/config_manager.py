@@ -101,8 +101,7 @@ class BenchTaskConfigManager():
         name = kwargs.get("specific_name", f"{target_entity}")
         xml_path = name2class_xml[target_entity][-1]
         if isinstance(xml_path, list):
-            #xml_path = random.choice(xml_path)
-            xml_path=xml_path[-1]
+            xml_path = random.choice(xml_path)
         entity_config = dict(
             name=name,
             xml_path=xml_path,

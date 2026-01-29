@@ -115,3 +115,40 @@ class SelectToyCommonSense(SelectToyTask):
 class SelectToySemantic(SelectToyTask):
     def __init__(self, task_name, robot, **kwargs):
         super().__init__(task_name, robot, **kwargs)
+
+@register.add_config_manager("select_toy_hawkeye")
+class SelectHawkeyeConfigManager(SelectToyConfigManager):
+    def get_seen_task_config(self):
+        target_entity = "hawkeye"
+        if self.seen_container is not None:
+            container = random.choice(self.seen_container)
+        else:
+            container = None
+        if self.seen_init_container is not None:
+            init_container = random.choice(self.seen_init_container)
+        else:
+            init_container= None
+        return self.get_task_config(target_entity=target_entity, 
+                                    target_container=container, 
+                                    init_container=init_container,
+                                    **self.kwargs)
+    
+    def get_unseen_task_config(self):
+        target_entity = "hawkeye"
+        if self.unseen_container is not None:
+            container = random.choice(self.unseen_container)
+        else:
+            container = None
+        if self.unseen_init_container is not None:
+            init_container = random.choice(self.unseen_init_container)
+        else:
+            init_container= None
+        return self.get_task_config(target_entity=target_entity, 
+                                    target_container=container, 
+                                    init_container=init_container,
+                                    **self.kwargs)
+
+@register.add_task("select_toy_hawkeye")
+class SelectHawkeyeTask(SelectToyTask):
+    def __init__(self, task_name, robot, **kwargs):
+        super().__init__(task_name, robot=robot, **kwargs)

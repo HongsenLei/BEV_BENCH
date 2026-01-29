@@ -2,12 +2,12 @@ import random
 import numpy as np
 from functools import partial
 from VLABench.utils.register import register
-from VLABench.tasks.hierarchical_tasks.primitive.select_book_series import SelectSpecificTypeBookConfigManager, SelectBookTask
+from VLABench.tasks.hierarchical_tasks.primitive.select_book_series import SelectSpecificTypeBookConfigManager, SelectBookTask, SelectBookConfigManager
 from VLABench.utils.skill_lib import SkillLib
 from VLABench.utils.utils import euler_to_quaternion
 
 @register.add_config_manager("set_study_table")
-class SelectBookConfigManager(SelectSpecificTypeBookConfigManager):
+class SetStudyTableConfigManager(SelectSpecificTypeBookConfigManager):
     def __init__(self, 
                  task_name,
                  num_objects=[3, 4],
@@ -63,3 +63,78 @@ class SetStudyTableTask(SelectBookTask):
             partial(SkillLib.open_laptop, target_entity_name="laptop"),
         ]
         return skill_sequence
+    
+@register.add_config_manager("set_study_table_data_visualization")
+class SetStudyTableDataVisualConfigManager(SelectBookConfigManager):
+    def __init__(self, 
+                 task_name,
+                 num_objects=[3, 4],
+                 **kwargs):
+        super().__init__(task_name, num_objects, **kwargs)
+    
+    def get_seen_task_config(self):
+        target_entity = "data_visualization"
+        if self.seen_container is not None:
+            container = random.choice(self.seen_container)
+        else:
+            container = None
+        if self.seen_init_container is not None:
+            init_container = random.choice(self.seen_init_container)
+        else:
+            init_container = None
+        return self.get_task_config(target_entity=target_entity, 
+                                    target_container=container, 
+                                    init_container=init_container,
+                                    **self.kwargs)
+    
+    def get_unseen_task_config(self):
+        target_entity = "data_visualization"
+        if self.unseen_container is not None:
+            container = random.choice(self.unseen_container)
+        else:
+            container = None
+        if self.unseen_init_container is not None:
+            init_container = random.choice(self.unseen_init_container)
+        else:
+            init_container = None
+        return self.get_task_config(target_entity=target_entity, 
+                                    target_container=container, 
+                                    init_container=init_container,
+                                    **self.kwargs)
+    
+    def load_objects(self, target_entity):
+        super().load_objects(target_entity)
+        init_container_config = self.config["task"]["components"][-1]
+        for i, subentity_config in enumerate(init_container_config["subentities"]):
+            subentity_config["position"][1] -= 0.1
+        laptop_config = self.get_entity_config("laptop", position=[random.uniform(-0.2, -0.1), random.uniform(-0.1, 0.0), 0.8])
+        self.config["task"]["components"].append(laptop_config) 
+    
+    def load_init_containers(self, init_container):
+        if init_container is not None:
+            self.config["task"]["components"].append(self.get_entity_config(init_container, 
+                                                                            position=[random.uniform(-0.1, 0.1), 
+                                                                                      random.uniform(0.35, 0.4), 0.8]))
+    
+    def get_instruction(self, target_entity, **kwargs):
+        instruction = [f"Today I want to review {target_entity}. Please help me to manage the study table before I come."]
+        self.config["task"]["instructions"] = instruction
+    
+    def get_condition_config(self, target_entity, init_container, **kwargs):
+        condition_config = dict(
+            not_contain=dict(
+                container=init_container,
+                entities=[target_entity]
+            ),
+            joint_in_range=dict(
+                target_pos_range=[1.2, 1.5],
+                entities=["laptop"]
+            )
+        )
+        self.config["task"]["conditions"] = condition_config
+
+@register.add_task("set_study_table_data_visualization")
+class SetStudyTableDataVisualBookTask(SetStudyTableTask):
+    def __init__(self, task_name, robot, **kwargs):
+        super().__init__(task_name, robot, **kwargs)
+ 
