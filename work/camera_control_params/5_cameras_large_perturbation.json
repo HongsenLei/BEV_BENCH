@@ -1,0 +1,48 @@
+{
+    "right0": {
+        "horizon_view": -15,
+        "up_view": -10,
+        "scale_factor": 1.2,
+        "look_at_center": false,
+        "end_point_rot": 0,
+        "end_point_vertical": 0
+    },
+    "right1": {
+        "horizon_view": -15,
+        "up_view": 10,
+        "scale_factor": 0.8,
+        "look_at_center": false,
+        "end_point_rot": 0,
+        "end_point_vertical": 0
+    },
+    "left0": {
+        "horizon_view": -15,
+        "up_view": -10,
+        "scale_factor": 1.2,
+        "look_at_center": false,
+        "end_point_rot": 0,
+        "end_point_vertical": 0
+    },
+    "left1": {
+        "horizon_view": -15,
+        "up_view": 10,
+        "scale_factor": 0.8,
+        "look_at_center": false,
+        "end_point_rot": 0,
+        "end_point_vertical": 0
+    },
+    "forward": {
+        "horizon_view": -15,
+        "up_view": -10,
+        "scale_factor": 0.8,
+        "look_at_center": false,
+        "end_point_rot": 0,
+        "end_point_vertical": 0
+    },
+    "imput_camera_xml_path": "VLABench/assets/base/5_cameras.xml",
+    "pivot_point": [
+        0,
+        -0.02,
+        1.196
+    ]
+}
