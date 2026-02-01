@@ -26,8 +26,10 @@ ENV2DATASET_OBSERVATION={
 } # 转换为lerobot的数据
 
 print("初始化环境...")
+camera_perturbation = "large"
+xml_file= f"base/camera_{camera_perturbation}_env.xml"
 
-env: LM4ManipDMEnv = load_env("get_coffee")
+env: LM4ManipDMEnv = load_env("get_coffee", xml_file=xml_file)
 env.reset()
 print("初始化环境完成...")
 print("获取相机参数...")
@@ -103,7 +105,7 @@ for dataset_key, env_idx in ENV2DATASET_OBSERVATION.items():
     }
 
 # 保存为 json 文件
-output_file = "work/gen_camera_params/small_camera_params.json"
+output_file = f"work/gen_camera_params/in_order_{camera_perturbation}_camera_params.json"
 with open(output_file, "w") as f:
     json.dump(camera_para, f, indent=4)
 
