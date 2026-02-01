@@ -24,7 +24,7 @@ def get_args():
     parser.add_argument('--port', default=10123, type=int, help="The port to the remote server")
     parser.add_argument('--replanstep', default=4, type=int, help="The step to replan")
     parser.add_argument('--observation_images', nargs='+', default=["observation.image_0","observation.image_1","observation.image_2","observation.image_3","observation.image_4", "observation.image_wrist"]  , help="Specific view to run")
-    parser.add_argument('--camera-perturbation', default=None, type=str, choices=["none", "small", "medium", "large"], help="Add camera position and pose perturbation in a predefined way")
+    parser.add_argument('--camera-perturbation', type=str, choices=["fix", "small", "medium", "large"], help="Add camera position and pose perturbation in a predefined way")
     args = parser.parse_args()
     return args
 
@@ -73,7 +73,7 @@ def evaluate(args):
     #         tasks = list(episode_config.keys())
 
     # 在这里修改xml_file的路径
-    if args.camera_perturbation is not None and args.camera_perturbation != "none":
+    if args.camera_perturbation is not None and args.camera_perturbation != "fix":
         xml_file=f"base/camera_{args.camera_perturbation}_env.xml"
         print(f"Start evaluating camera perturbation {args.camera_perturbation} .......")
     else:
