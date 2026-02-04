@@ -9,16 +9,6 @@ import msgpack
 import numpy as np
 from VLABench.utils.utils import euler_to_quaternion, quaternion_to_euler
 
-
-# OBSERVATION = {
-#     "observation.image_0": 2,
-#     "observation.image_1": 3,
-#     "observation.image_2": 0,
-#     "observation.image_3": 1,
-#     "observation.image_4": 4,
-#     "observation.image_wrist": 5,
-# }  # 转换为lerobot的数据
-
 OBSERVATION = {
     "observation.image_0": 0,
     "observation.image_1": 1,
@@ -100,19 +90,20 @@ class LerobotMultiviewPolicy:
         self.observation_images = observation_images
 
     def predict(self, observation, **kwargs):
-        dp_obs = {}
+        policy_obs = {}
         ee_state = observation["ee_state"]
         ee_pos, ee_quat, gripper = ee_state[:3], ee_state[3:7], np.array([ee_state[7]])
         ee_pos -= np.array([0, -0.4, 0.78])  # 转换为lerobot的数据
         ee_euler = quaternion_to_euler(ee_quat)
         ee_state = np.concatenate([ee_pos, ee_euler, gripper], axis=0)
         state = np.array(ee_state, dtype=np.float32)
-        dp_obs["observation.state"] = state
+        policy_obs["observation.state"] = state
         for img in self.observation_images:
-            dp_obs[img] = np.array(
+            policy_obs[img] = np.array(
                 preprocess_image(observation["rgb"][OBSERVATION[img]]), dtype=np.float32
             )
-        raw_action = self.infer(dp_obs)
+        policy_obs["task"] = observation["instruction"]
+        raw_action = self.infer(policy_obs)
         target_pos, target_euler, gripper = raw_action[:3], raw_action[3:6], raw_action[-1]
         if gripper >= 0.1:
             gripper_state = np.ones(2)*0.04
